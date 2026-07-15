@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AnthologyRX+ · Coming Soon</title>
+<meta name="description" content="Physician-guided peptide protocols, compounded by a licensed US pharmacy. Coming soon. Join the waitlist." />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AnthologyRX+ · Coming Soon" />
+<meta property="og:description" content="Physician-guided peptide protocols, compounded by a licensed US pharmacy. Coming soon." />
+<meta property="og:url" content="https://anthologyrxplus.com/" />
+<meta name="theme-color" content="#1E1E1E" />
+<meta name="robots" content="noindex" /><!-- pre-launch -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg:     #1E1E1E;
+    --ink-bg: #141311;
+    --sand:   #E8DCC8;
+    --bone:   #F2EDE4;
+    --gold:   #B28A2A;
+    --gold-2: #C4952A;
+    --border: #373430;
+    --card:   #211E1B;
+    --dim:    #8C8375;
+    --ink:    #17140D;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--sand);
+    font-family: 'Epilogue', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .stage {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Full-bleed grayscale hero, warm charcoal wash — matches anthologyrx.com */
+  .bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-color: #141311; /* fallback if the image is slow or blocked */
+    /* Real AnthologyRX brand asset (already B&W). Copy into project /assets before go-live rather than hotlinking. */
+    background-image: url('https://www.anthologyrx.com/assets/images/img-gym.jpg');
+    background-size: cover;
+    background-position: center 40%;
+    filter: grayscale(100%) contrast(1.04) brightness(0.72);
+  }
+  .overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      linear-gradient(90deg, rgba(20,19,17,0.94) 0%, rgba(20,19,17,0.66) 48%, rgba(20,19,17,0.34) 100%),
+      linear-gradient(180deg, rgba(20,19,17,0.60) 0%, rgba(20,19,17,0.20) 42%, rgba(20,19,17,0.90) 100%);
+  }
+
+  /* Content layers sit above bg/overlay. Do NOT reposition .bg/.overlay here. */
+  .top, .content, .foot { position: relative; z-index: 2; }
+  .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+  /* Top wordmark */
+  .top { padding: 34px 0 0; }
+  .wordmark {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: 0.01em;
+    color: var(--bone);
+    display: inline-flex;
+    align-items: baseline;
+    /* LOGO SLOT: swap for the official AnthologyRX+ wordmark from the logo pack */
+  }
+  .wordmark .rx { color: var(--gold-2); }
+  .wordmark .plus { color: var(--gold-2); margin-left: 1px; }
+
+  /* Centered-left content */
+  .content {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 0;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-2);
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    /* Scaled to the main site's monumental hero (~112px desktop) so Unbounded reads imposing, not bubbly */
+    font-size: clamp(44px, 9vw, 108px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--bone);
+    margin-bottom: 28px;
+    max-width: 13ch;
+  }
+  h1 .accent { color: var(--gold-2); }
+  .lede {
+    font-size: clamp(16px, 1.9vw, 19px);
+    font-weight: 300;
+    color: var(--sand);
+    max-width: 540px;
+    line-height: 1.6;
+    border-left: 2px solid var(--gold);
+    padding-left: 20px;
+    margin-bottom: 38px;
+  }
+
+  /* Waitlist capture — static UI, wire to ESP (LTV.ai / Customer.io) later */
+  form.capture { max-width: 540px; }
+  .fields { display: flex; gap: 10px; flex-wrap: wrap; }
+  form.capture input[type="email"],
+  form.capture input[type="tel"] {
+    flex: 1 1 200px;
+    min-width: 0;
+    background: rgba(33,30,27,0.85);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--bone);
+    font-family: 'Epilogue', sans-serif;
+    font-size: 16px;
+    padding: 16px 18px;
+    outline: none;
+    transition: border-color 0.18s ease;
+    backdrop-filter: blur(2px);
+  }
+  form.capture input::placeholder { color: var(--dim); }
+  form.capture input:focus { border-color: var(--gold); }
+  form.capture .btn-gold { margin-top: 10px; width: 100%; }
+  /* SMS opt-in — TCPA / A2P 10DLC. Consent copy pending counsel review. */
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 14px;
+    text-align: left;
+  }
+  .consent input[type="checkbox"] {
+    margin-top: 3px;
+    width: 16px; height: 16px;
+    accent-color: var(--gold);
+    flex: 0 0 auto;
+    cursor: pointer;
+  }
+  .consent label {
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--dim);
+    font-weight: 300;
+  }
+  .btn-gold {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 16px 30px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.12s ease;
+  }
+  .btn-gold:hover { background: var(--gold-2); transform: translateY(-1px); }
+  .form-note { margin-top: 15px; font-size: 13px; color: var(--dim); font-weight: 300; }
+  .success {
+    display: none;
+    max-width: 520px;
+    background: rgba(33,30,27,0.9);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px 22px;
+    color: var(--bone);
+    font-size: 16px;
+  }
+  .success.show { display: block; }
+  form.capture.hide { display: none; }
+
+  /* Footer strip */
+  .foot {
+    padding: 22px 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .foot .tag {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .foot .meta { font-size: 12px; color: var(--dim); }
+  .foot .meta a { color: var(--gold-2); text-decoration: none; }
+  .foot .meta a:hover { text-decoration: underline; }
+
+  /* Fine print, kept small and out of the way for a coming-soon page */
+  .fineprint {
+    background: var(--ink-bg);
+    border-top: 1px solid var(--border);
+    padding: 18px 0;
+  }
+  .fineprint p {
+    font-size: 10.5px;
+    line-height: 1.6;
+    color: #6F675C;
+    font-weight: 300;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .lede { padding-left: 16px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="stage">
+    <div class="bg"></div>
+    <div class="overlay"></div>
+
+    <div class="top">
+      <div class="wrap">
+        <!-- LOGO SLOT -->
+        <span class="wordmark" aria-label="AnthologyRX Plus">ANTHOLOGY<span class="rx">RX</span><span class="plus">+</span></span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="wrap">
+        <div class="eyebrow">Coming Soon</div>
+        <h1>Peptides.<br />Finally done <span class="accent">right.</span></h1>
+        <p class="lede">
+          Physician-designed peptide protocols, compounded by a licensed US pharmacy
+          and overseen by a medical provider. The gray market, retired.
+        </p>
+
+        <form class="capture" id="waitlistForm" novalidate onsubmit="return handleWaitlist(event)">
+          <div class="fields">
+            <input type="email" name="email" id="emailInput" placeholder="you@email.com" autocomplete="email" required aria-label="Email address" />
+            <input type="tel" name="phone" id="phoneInput" placeholder="Mobile (optional)" autocomplete="tel" aria-label="Mobile phone number" />
+          </div>
+          <div class="consent">
+            <input type="checkbox" name="sms_consent" id="smsConsent" />
+            <label for="smsConsent">
+              <!-- COUNSEL REVIEW: TCPA / A2P 10DLC consent language. Finalize before go-live. -->
+              Text me AnthologyRX+ launch updates. By checking this box I agree to receive recurring automated
+              marketing texts at the number provided. Consent is not a condition of anything. Msg &amp; data rates may
+              apply. Reply STOP to opt out, HELP for help.
+            </label>
+          </div>
+          <button type="submit" class="btn-gold">Join the Waitlist</button>
+        </form>
+        <div class="success" id="successMsg">You're on the list. We'll be in touch as AnthologyRX+ opens.</div>
+        <p class="form-note">Be first to know when we open. No spam.</p>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <span class="tag">Longevity · Vitality · Legacy</span>
+        <span class="meta">A sister brand of <a href="https://www.anthologyrx.com" rel="noopener">AnthologyRX</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fineprint">
+    <div class="wrap">
+      <p>
+        AnthologyRX+ is a technology and care-coordination platform, not a licensed pharmacy or medical provider.
+        Compounded medications are not FDA-approved and have not been evaluated by the FDA for safety, efficacy, or quality.
+        © 2026 AnthologyRX LLC.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Static UI only. Wire to the chosen ESP (LTV.ai / Customer.io) at integration time; keep input name="email".
+    function handleWaitlist(e) {
+      e.preventDefault();
+      var email = document.getElementById('emailInput');
+      var phone = document.getElementById('phoneInput');
+      var consent = document.getElementById('smsConsent');
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email.value || '').trim());
+      if (!emailOk) { email.focus(); email.style.borderColor = '#B24A2A'; return false; }
+      // If the user opts into SMS, a valid phone number is required for consent to be meaningful.
+      if (consent.checked) {
+        var digits = (phone.value || '').replace(/\D/g, '');
+        if (digits.length < 10) { phone.focus(); phone.style.borderColor = '#B24A2A'; return false; }
+      }
+      // TODO(integration): POST { email, phone, sms_consent } to the ESP endpoint here.
+      document.getElementById('waitlistForm').classList.add('hide');
+      document.getElementById('successMsg').classList.add('show');
+      return false;
+    }
+  </script>
+
+</body>
+</html>
