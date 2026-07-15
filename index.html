@@ -85,8 +85,11 @@
 
   /* Top wordmark */
   .top { padding: 34px 0 0; }
-  /* Official nav wordmark PNG from logo pack (transparent, for dark bg). PNG has internal padding, so height is larger than the visible glyphs. */
-  .wordmark { height: 52px; width: auto; display: block; margin-top: -8px; margin-bottom: -8px; }
+  /* Official nav wordmark PNG from the logo pack, used unaltered.
+     The 600x200 file has large transparent padding (glyphs occupy only 471x37, offset 64/81),
+     so we size by height and pull the padding back with negative margins. At 70px tall the
+     lettering renders ~164px wide, matching the anthologyrx.com nav logo. */
+  .wordmark { height: 70px; width: auto; display: block; margin: -28px 0 -28px -22px; }
 
   /* Centered-left content */
   .content {
