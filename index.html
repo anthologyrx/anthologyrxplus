@@ -102,16 +102,15 @@
   }
   h1 {
     font-family: 'Unbounded', sans-serif;
-    font-weight: 700;
-    /* Scaled to the main site's monumental hero (~112px desktop) so Unbounded reads imposing, not bubbly */
-    font-size: clamp(44px, 9vw, 108px);
-    line-height: 1.0;
-    letter-spacing: -0.02em;
+    font-weight: 500; /* lighter than the parent's 700 to soften Unbounded's roundness */
+    font-size: clamp(38px, 7.2vw, 90px);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
     color: var(--bone);
     margin-bottom: 28px;
-    max-width: 13ch;
+    max-width: 14ch;
   }
-  h1 .accent { color: var(--gold-2); }
+  h1 .accent { color: var(--gold-2); font-weight: 600; }
   .lede {
     font-size: clamp(16px, 1.9vw, 19px);
     font-weight: 300;
