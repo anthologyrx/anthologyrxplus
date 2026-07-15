@@ -13,9 +13,13 @@
 <meta name="theme-color" content="#1E1E1E" />
 <meta name="robots" content="noindex" /><!-- pre-launch -->
 
+<!-- Favicon: official A+RX icon. Add favicon.png (and favicon.ico) to repo root; files pending from logo pack. -->
+<link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="apple-touch-icon" href="/favicon.png" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -71,18 +75,26 @@
 
   /* Top wordmark */
   .top { padding: 34px 0 0; }
+  /* Official wordmark spec (logo pack README): ANTHOLOGY = Unbounded 400 sand; RX+ = Unbounded 700 gold, superscript */
   .wordmark {
     font-family: 'Unbounded', sans-serif;
-    font-weight: 700;
-    font-size: 21px;
-    letter-spacing: 0.01em;
-    color: var(--bone);
+    font-weight: 400;
+    font-size: 19px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sand);
     display: inline-flex;
     align-items: baseline;
-    /* LOGO SLOT: swap for the official AnthologyRX+ wordmark from the logo pack */
   }
-  .wordmark .rx { color: var(--gold-2); }
-  .wordmark .plus { color: var(--gold-2); margin-left: 1px; }
+  .wordmark .rx {
+    font-weight: 700;
+    color: var(--gold-2);
+    font-size: 0.66em;
+    letter-spacing: 0.04em;
+    margin-left: 5px;
+    position: relative;
+    top: -0.35em;
+  }
 
   /* Centered-left content */
   .content {
@@ -102,15 +114,15 @@
   }
   h1 {
     font-family: 'Unbounded', sans-serif;
-    font-weight: 500; /* lighter than the parent's 700 to soften Unbounded's roundness */
-    font-size: clamp(38px, 7.2vw, 90px);
-    line-height: 1.08;
-    letter-spacing: -0.015em;
+    font-weight: 700; /* match anthologyrx.com hero exactly */
+    font-size: clamp(44px, 9vw, 108px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
     color: var(--bone);
     margin-bottom: 28px;
-    max-width: 14ch;
+    max-width: 13ch;
   }
-  h1 .accent { color: var(--gold-2); font-weight: 600; }
+  h1 .accent { color: var(--gold-2); }
   .lede {
     font-size: clamp(16px, 1.9vw, 19px);
     font-weight: 300;
@@ -203,6 +215,25 @@
     flex-wrap: wrap;
     border-top: 1px solid rgba(255,255,255,0.06);
   }
+  .foot .brand {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sand);
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .foot .brand .rx {
+    font-weight: 700;
+    color: var(--gold-2);
+    font-size: 0.66em;
+    letter-spacing: 0.04em;
+    margin-left: 4px;
+    position: relative;
+    top: -0.35em;
+  }
   .foot .tag {
     font-family: 'Unbounded', sans-serif;
     font-size: 10px;
@@ -243,15 +274,14 @@
 
     <div class="top">
       <div class="wrap">
-        <!-- LOGO SLOT -->
-        <span class="wordmark" aria-label="AnthologyRX Plus">ANTHOLOGY<span class="rx">RX</span><span class="plus">+</span></span>
+        <span class="wordmark" aria-label="AnthologyRX Plus">ANTHOLOGY<span class="rx">RX+</span></span>
       </div>
     </div>
 
     <div class="content">
       <div class="wrap">
         <div class="eyebrow">Coming Soon</div>
-        <h1>Peptides.<br />Finally done <span class="accent">right.</span></h1>
+        <h1>Peptides.<br />Finally Done <span class="accent">Right.</span></h1>
         <p class="lede">
           Physician-designed peptide protocols, compounded by a licensed US pharmacy
           and overseen by a medical provider. The gray market, retired.
@@ -280,7 +310,10 @@
 
     <div class="foot">
       <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
-        <span class="tag">Longevity · Vitality · Legacy</span>
+        <span style="display:flex;flex-direction:column;gap:8px;">
+          <span class="brand" aria-label="AnthologyRX Plus">ANTHOLOGY<span class="rx">RX+</span></span>
+          <span class="tag">Longevity · Vitality · Legacy</span>
+        </span>
         <span class="meta">A sister brand of <a href="https://www.anthologyrx.com" rel="noopener">AnthologyRX</a></span>
       </div>
     </div>
