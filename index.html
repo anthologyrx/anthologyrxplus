@@ -256,6 +256,9 @@
         </p>
 
         <form class="capture" id="waitlistForm" novalidate onsubmit="return handleWaitlist(event)">
+          <!-- Honeypot: hidden from humans; if a bot fills it, we drop the submission. -->
+          <input type="text" name="company" id="hpField" tabindex="-1" autocomplete="off" aria-hidden="true"
+                 style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
           <div class="fields">
             <input type="email" name="email" id="emailInput" placeholder="you@email.com" autocomplete="email" required aria-label="Email address" />
             <input type="tel" name="phone" id="phoneInput" placeholder="Mobile (optional)" autocomplete="tel" aria-label="Mobile phone number" />
@@ -276,11 +279,6 @@
       </div>
     </div>
 
-    <div class="foot">
-      <div class="wrap" style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
-        <span class="tag">Longevity · Vitality · Legacy</span>
-      </div>
-    </div>
   </div>
 
   <div class="fineprint">
@@ -294,22 +292,57 @@
   </div>
 
   <script>
-    // Static UI only. Wire to the chosen ESP (LTV.ai / Customer.io) at integration time; keep input name="email".
+    // Google Apps Script Web App URL (writes signups to the AnthologyRX+ Waitlist Sheet).
+    var WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfycby96q3fp2Mt3bpdAW6WVFEy7NyJvpv82P8NXOwGOnYT1EE1VOp5w4bSYIgZtUspAc6j/exec";
+
+    function showWaitlistSuccess() {
+      document.getElementById('waitlistForm').classList.add('hide');
+      document.getElementById('successMsg').classList.add('show');
+    }
+
     function handleWaitlist(e) {
       e.preventDefault();
       var email = document.getElementById('emailInput');
       var phone = document.getElementById('phoneInput');
       var consent = document.getElementById('smsConsent');
+
+      // Honeypot: if the hidden field is filled, it's a bot. Silently no-op.
+      if (document.getElementById('hpField').value) { showWaitlistSuccess(); return false; }
+
       var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email.value || '').trim());
       if (!emailOk) { email.focus(); email.style.borderColor = '#B24A2A'; return false; }
+
       // If the user opts into SMS, a valid phone number is required for consent to be meaningful.
       if (consent.checked) {
         var digits = (phone.value || '').replace(/\D/g, '');
         if (digits.length < 10) { phone.focus(); phone.style.borderColor = '#B24A2A'; return false; }
       }
-      // TODO(integration): POST { email, phone, sms_consent } to the ESP endpoint here.
-      document.getElementById('waitlistForm').classList.add('hide');
-      document.getElementById('successMsg').classList.add('show');
+
+      var consentLabel = document.querySelector('.consent label');
+      var payload = {
+        email: (email.value || '').trim(),
+        phone: (phone.value || '').trim(),
+        sms_consent: !!consent.checked,
+        // Store the exact wording shown, so the opt-in record is defensible (TCPA).
+        consent_text: consent.checked && consentLabel ? consentLabel.innerText.trim().replace(/\s+/g, ' ') : '',
+        source: 'anthologyrxplus.com coming-soon',
+        user_agent: navigator.userAgent
+      };
+
+      // Fire-and-forget to the Sheet. no-cors keeps the request simple (no preflight);
+      // we can't read the response, but the row still gets written.
+      if (WAITLIST_ENDPOINT) {
+        try {
+          fetch(WAITLIST_ENDPOINT, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+          });
+        } catch (err) { /* never block the UX on a network hiccup */ }
+      }
+
+      showWaitlistSuccess();
       return false;
     }
   </script>
